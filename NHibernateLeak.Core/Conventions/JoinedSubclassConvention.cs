@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
-namespace NHibernateLeak.Web.Classes
+namespace NHibernateLeak.Core.Conventions
 {
 	public class JoinedSubclassConvention : IJoinedSubclassConvention
 	{

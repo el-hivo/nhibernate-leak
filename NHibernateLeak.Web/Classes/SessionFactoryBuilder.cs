@@ -1,3 +1,5 @@
+using System.Web;
+using System.Web.Routing;
 using NHibernate;
 
 namespace NHibernateLeak.Web.Classes
@@ -10,11 +12,15 @@ namespace NHibernateLeak.Web.Classes
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="schemaName"></param>
         /// <returns></returns>
-        public ISessionFactory CreateSchemaSessionFactory(string schemaName)
+        public ISessionFactory CreateSchemaSessionFactory()
         {
-            return SqlNHibernateSessionFactoryProvider.CreateSessionFactory(schemaName, "ISPolitical.Connection");
+            HttpContextWrapper context = new HttpContextWrapper(HttpContext.Current);
+            RouteData data = RouteTable.Routes.GetRouteData(context);
+
+            string tenant = data?.Values["tenant"] as string;
+
+            return SqlNHibernateSessionFactoryProvider.CreateSessionFactory("sch" + tenant?.PadLeft(3, '0'), "MemoryLeak.Connection");
         }
     }
 }

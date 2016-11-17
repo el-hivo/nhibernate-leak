@@ -1,8 +1,9 @@
 ﻿using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 using FluentNHibernate.Mapping;
+using NHibernateLeak.Core.Attributes;
 
-namespace NHibernateLeak.Web.Classes
+namespace NHibernateLeak.Core.Conventions
 {
     public class ReferenceConvention : IReferenceConvention
     {

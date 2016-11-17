@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NHibernate;
+using NHibernate.Linq;
 
 namespace NHibernateLeak.Web.Classes
 {
     public class Repository : IRepository
     {
-
         protected IUnitOfWorkManager UnitOfWorkManager;
         public ISession Session { get; set; }
 
@@ -21,7 +21,7 @@ namespace NHibernateLeak.Web.Classes
 
         public IQueryable<T> GetAll<T>() where T : class
         {
-            throw new NotImplementedException();
+            return Session.Query<T>();
         }
 
         public T GetById<T>(long id) where T : class

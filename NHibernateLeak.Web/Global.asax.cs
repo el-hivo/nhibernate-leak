@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using NHibernateLeak.Web.Ninject;
 using Ninject;
 using Ninject.Web.Common;
 
@@ -9,7 +10,7 @@ namespace NHibernateLeak.Web
     {
         protected override IKernel CreateKernel()
         {
-            return new StandardKernel();
+            return new StandardKernel(new NHibernateNinjectModule());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -20,7 +21,7 @@ namespace NHibernateLeak.Web
 
             routes.MapRoute(
                 "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
+                "{tenant}/{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
         }
@@ -29,6 +30,7 @@ namespace NHibernateLeak.Web
         {
             base.OnApplicationStarted();
             RegisterRoutes(RouteTable.Routes);
+            //GlobalFilters.Filters.Add(new TenantFilter());
         }
     }
 }

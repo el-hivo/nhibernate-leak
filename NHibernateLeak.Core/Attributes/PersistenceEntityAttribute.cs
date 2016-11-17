@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernateLeak.Web.Classes
+namespace NHibernateLeak.Core.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public class PersistenceEntityAttribute : Attribute

@@ -4,7 +4,7 @@ using FluentNHibernate.Conventions.AcceptanceCriteria;
 using FluentNHibernate.Conventions.Inspections;
 using FluentNHibernate.Conventions.Instances;
 
-namespace NHibernateLeak.Web.Classes
+namespace NHibernateLeak.Core.Conventions
 {
     /// <summary>
     /// This Fluent-NHibernate convention allos to map to ints both Enum and (nullable) Enum?

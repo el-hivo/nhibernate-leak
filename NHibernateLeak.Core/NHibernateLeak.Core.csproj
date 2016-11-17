@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A3BA8B15-42DA-44DF-BD4E-A6304FB9867F}</ProjectGuid>
+    <ProjectGuid>{054539E4-507B-40FF-80D0-862BD311F8EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NHibernateLeak.Entities</RootNamespace>
-    <AssemblyName>NHibernateLeak.Entities</AssemblyName>
+    <RootNamespace>NHibernateLeak.Core</RootNamespace>
+    <AssemblyName>NHibernateLeak.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,9 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="FluentNHibernate">
       <HintPath>..\Libraries\NHibernate\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\Libraries\NHibernate\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,22 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappings\Table001Map.cs" />
-    <Compile Include="Mappings\Table002Map.cs" />
-    <Compile Include="Mappings\Table003Map.cs" />
-    <Compile Include="Mappings\Table004Map.cs" />
-    <Compile Include="Table001.cs" />
+    <Compile Include="Attributes\CascadeAttribute.cs" />
+    <Compile Include="Attributes\ComponentAttribute.cs" />
+    <Compile Include="Attributes\DiscriminatorColumnAttribute.cs" />
+    <Compile Include="Attributes\DiscriminatorValueAttribute.cs" />
+    <Compile Include="Attributes\DoNotPersistAttribute.cs" />
+    <Compile Include="Attributes\NotLazyLoadAttribute.cs" />
+    <Compile Include="Attributes\NotSaveUpdateAttribute.cs" />
+    <Compile Include="Attributes\PersistenceEntityAttribute.cs" />
+    <Compile Include="AutomappingConfiguration.cs" />
+    <Compile Include="Conventions\EnumConvention.cs" />
+    <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
+    <Compile Include="Conventions\HasManyConvention.cs" />
+    <Compile Include="Conventions\HasManyToManyConvention.cs" />
+    <Compile Include="Conventions\JoinedSubclassConvention.cs" />
+    <Compile Include="Conventions\PrimaryKeyConvention.cs" />
+    <Compile Include="Conventions\PropertyConvention.cs" />
+    <Compile Include="Conventions\ReferenceConvention.cs" />
+    <Compile Include="Conventions\SubclassConvention.cs" />
+    <Compile Include="Conventions\TableNamingConvention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Table004.cs" />
-    <Compile Include="Table003.cs" />
-    <Compile Include="Table002.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NHibernateLeak.Core\NHibernateLeak.Core.csproj">
-      <Project>{054539E4-507B-40FF-80D0-862BD311F8EE}</Project>
-      <Name>NHibernateLeak.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

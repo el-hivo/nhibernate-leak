@@ -114,37 +114,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Test\Urls.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\AutomappingConfiguration.cs" />
-    <Compile Include="Classes\CascadeAttribute.cs" />
-    <Compile Include="Classes\ComponentAttribute.cs" />
-    <Compile Include="Classes\DiscriminatorColumnAttribute.cs" />
-    <Compile Include="Classes\DiscriminatorValueAttribute.cs" />
-    <Compile Include="Classes\DoNotPersistAttribute.cs" />
-    <Compile Include="Classes\EnumConvention.cs" />
-    <Compile Include="Classes\ForeignKeyNamingConvention.cs" />
-    <Compile Include="Classes\HasManyConvention.cs" />
-    <Compile Include="Classes\HasManyToManyConvention.cs" />
+    <Compile Include="Classes\FilterParameters.cs" />
+    <Compile Include="Classes\IQueryRepository.cs" />
     <Compile Include="Classes\IReadOnlyRepository.cs" />
     <Compile Include="Classes\IRepository.cs" />
     <Compile Include="Classes\ISessionFactoryBuilder.cs" />
     <Compile Include="Classes\IUnitOfWorkManager.cs" />
-    <Compile Include="Classes\JoinedSubclassConvention.cs" />
-    <Compile Include="Classes\NotLazyLoadAttribute.cs" />
-    <Compile Include="Classes\NotSaveUpdateAttribute.cs" />
-    <Compile Include="Classes\PersistenceEntityAttribute.cs" />
-    <Compile Include="Classes\PrimaryKeyConvention.cs" />
-    <Compile Include="Classes\PropertyConvention.cs" />
-    <Compile Include="Classes\ReferenceConvention.cs" />
+    <Compile Include="Classes\QueryRepository.cs" />
     <Compile Include="Classes\Repository.cs" />
     <Compile Include="Classes\SchemaNHibernateRepository.cs" />
     <Compile Include="Classes\SchemaNHibernateUnitOfWorkManager.cs" />
     <Compile Include="Classes\SessionFactoryBuilder.cs" />
-    <Compile Include="Classes\SQLNHibernateSessionFactoryProvider}.cs" />
-    <Compile Include="Classes\SubclassConvention.cs" />
-    <Compile Include="Classes\TableNamingConvention.cs" />
+    <Compile Include="Classes\SQLNHibernateSessionFactoryProvider.cs" />
     <Compile Include="Classes\UnitOfWorkManager.cs" />
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Global.asax.cs">
@@ -152,6 +137,7 @@
     </Compile>
     <Compile Include="Ninject\NHibernateModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TenantFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -163,6 +149,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NHibernateLeak.Core\NHibernateLeak.Core.csproj">
+      <Project>{054539e4-507b-40ff-80d0-862bd311f8ee}</Project>
+      <Name>NHibernateLeak.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NHibernateLeak.Entities\NHibernateLeak.Entities.csproj">
       <Project>{a3ba8b15-42da-44df-bd4e-a6304fb9867f}</Project>
       <Name>NHibernateLeak.Entities</Name>

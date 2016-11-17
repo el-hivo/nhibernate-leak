@@ -2,7 +2,7 @@
 using FluentNHibernate.Conventions.Inspections;
 using FluentNHibernate.Conventions.Instances;
 
-namespace NHibernateLeak.Web.Classes
+namespace NHibernateLeak.Core.Conventions
 {
     // implementation taken from Fluent NHibernate class FluentNHibernate.Conventions.ManyToManyTableNameConvention
     public class HasManyToManyConvention : IHasManyToManyConvention

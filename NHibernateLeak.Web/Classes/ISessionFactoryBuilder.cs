@@ -10,8 +10,7 @@ namespace NHibernateLeak.Web.Classes
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="schemaName"></param>
         /// <returns></returns>
-        ISessionFactory CreateSchemaSessionFactory(string schemaName);
+        ISessionFactory CreateSchemaSessionFactory();
     }
 }

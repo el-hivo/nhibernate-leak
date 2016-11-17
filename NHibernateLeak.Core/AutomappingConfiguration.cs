@@ -2,8 +2,9 @@
 using System.Linq;
 using FluentNHibernate;
 using FluentNHibernate.Automapping;
+using NHibernateLeak.Core.Attributes;
 
-namespace NHibernateLeak.Web.Classes
+namespace NHibernateLeak.Core
 {
     public class AutomappingConfiguration : DefaultAutomappingConfiguration
     {

@@ -3,9 +3,8 @@ using NHibernateLeak.Core.Attributes;
 
 namespace NHibernateLeak.Entities
 {
-
     [PersistenceEntity]
-    public class Table001
+    public class Table003
     {
         public virtual int Id { get; set; }
         public virtual string Column_001 { get; set; }

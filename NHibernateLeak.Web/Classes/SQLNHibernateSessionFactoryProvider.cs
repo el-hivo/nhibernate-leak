@@ -6,6 +6,8 @@ using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
+using NHibernateLeak.Core;
+using NHibernateLeak.Core.Conventions;
 using NHibernateLeak.Entities;
 
 namespace NHibernateLeak.Web.Classes
@@ -14,7 +16,7 @@ namespace NHibernateLeak.Web.Classes
     {
         private static Dictionary<string, ISessionFactory> _sessionFactories = new Dictionary<string, ISessionFactory>();
 
-        public static ISessionFactory CreateSessionFactory(string schema = "", string keyConnection = "MSSQL.Connection")
+        public static ISessionFactory CreateSessionFactory(string schema, string keyConnection)
         {
             IList<Assembly> assembliesToMap = new List<Assembly>();
             assembliesToMap.Add(Assembly.GetAssembly(typeof(Table001)));
@@ -51,18 +53,7 @@ namespace NHibernateLeak.Web.Classes
                 {
                     m.AutoMappings.Add(
                         AutoMap.Assemblies(new AutomappingConfiguration(), assembliesToMap)
-                            .IncludeBase(baseClass)
-                            .Conventions.Add<TableNamingConvention>()
-                            .Conventions.Add<HasManyConvention>()
-                            .Conventions.Add<SQLPrimaryKeyConvention>()
-                            .Conventions.Add<EnumConvention>()
-                            .Conventions.Add<ForeignKeyNamingConvention>()
-                            .Conventions.Add<SubclassConvention>()
-                            .Conventions.Add<ReferenceConvention>()
-                            .Conventions.Add<HasManyToManyConvention>()
-                            .Conventions.Add<JoinedSubclassConvention>()
-                            .Conventions.Add<PropertyConvention>()
-                            .UseOverridesFromAssembly(overrideClass)
+                               .UseOverridesFromAssembly(overrideClass)
                     );
                 })
                 .Mappings(m => m.HbmMappings.AddFromAssembly(overrideClass))

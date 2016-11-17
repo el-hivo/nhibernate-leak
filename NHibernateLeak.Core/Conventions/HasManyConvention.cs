@@ -1,7 +1,8 @@
 ﻿using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
+using NHibernateLeak.Core.Attributes;
 
-namespace NHibernateLeak.Web.Classes
+namespace NHibernateLeak.Core.Conventions
 {
     public class HasManyConvention : IHasManyConvention
     {
