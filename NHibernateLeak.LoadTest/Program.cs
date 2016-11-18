@@ -10,7 +10,7 @@ namespace NHibernateLeak.LoadTest
     {
         static void Main(string[] args)
         {
-            var client = new RestClient("http://localhost:1732");
+            var client = new RestClient("http://nhibernate-leak.local.me/");
 
             
 

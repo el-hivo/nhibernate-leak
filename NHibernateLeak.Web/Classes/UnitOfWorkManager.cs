@@ -5,36 +5,36 @@ namespace NHibernateLeak.Web.Classes
 {
     public class UnitOfWorkManager : IUnitOfWorkManager
     {
-        protected readonly ISession mSession;
+        protected readonly ISession _session;
 
         public UnitOfWorkManager(ISession session)
         {
-            mSession = session;
+            _session = session;
         }
 
         public void CommitEverything()
         {
-            mSession.Flush();
+            _session.Flush();
         }
 
         public IDisposable BeginTransaction()
         {
-            return mSession.BeginTransaction();
+            return _session.BeginTransaction();
         }
 
         public void CommitTransaction()
         {
-            if (mSession.Transaction != null && mSession.Transaction.IsActive)
+            if (_session.Transaction != null && _session.Transaction.IsActive)
             {
-                mSession.Transaction.Commit();
+                _session.Transaction.Commit();
             }
         }
 
         public void RollbackTransaction()
         {
-            if (mSession.Transaction != null && mSession.Transaction.IsActive)
+            if (_session.Transaction != null && _session.Transaction.IsActive)
             {
-                mSession.Transaction.Rollback();
+                _session.Transaction.Rollback();
             }
         }
     }

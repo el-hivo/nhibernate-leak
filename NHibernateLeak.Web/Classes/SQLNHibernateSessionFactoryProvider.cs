@@ -1,42 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Reflection;
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernateLeak.Core;
-using NHibernateLeak.Core.Conventions;
 using NHibernateLeak.Entities;
 
 namespace NHibernateLeak.Web.Classes
 {
     public static class SqlNHibernateSessionFactoryProvider
     {
-        private static Dictionary<string, ISessionFactory> _sessionFactories = new Dictionary<string, ISessionFactory>();
+        private static readonly Dictionary<string, ISessionFactory> SessionFactories = new Dictionary<string, ISessionFactory>();
+        private static readonly object Mutex = new object();
 
         public static ISessionFactory CreateSessionFactory(string schema, string keyConnection)
         {
-            IList<Assembly> assembliesToMap = new List<Assembly>();
-            assembliesToMap.Add(Assembly.GetAssembly(typeof(Table001)));
-
             if (ConfigurationManager.ConnectionStrings[keyConnection] == null)
             {
                 throw new Exception("The Connection was not configured.");
             }
 
-            lock (_sessionFactories)
+            ISessionFactory factory;
+
+            lock (Mutex)
             {
-                if (!_sessionFactories.ContainsKey(schema))
+                if (!SessionFactories.ContainsKey(schema))
                 {
-                    var factory = CreateInstance(assembliesToMap, typeof(Table001),
-                                                 Assembly.GetAssembly(typeof(Table001)), schema, keyConnection);
-                    _sessionFactories.Add(schema, factory);
+                    IList<Assembly> assembliesToMap = new List<Assembly>();
+                    assembliesToMap.Add(Assembly.GetAssembly(typeof(Table001)));
+                    factory = CreateInstance(assembliesToMap, typeof(Table001), Assembly.GetAssembly(typeof(Table001)), schema, keyConnection);
+                    SessionFactories.Add(schema, factory);
+                }
+                else
+                {
+                    factory = SessionFactories[schema];
                 }
             }
 
-            return _sessionFactories[schema];
+            return factory;
         }
 
         /// <summary>
@@ -47,29 +52,37 @@ namespace NHibernateLeak.Web.Classes
         {
             return
                Fluently
-                .Configure()
-                .Database(MsSqlConfiguration.MsSql2008.ConnectionString(ConfigurationManager.ConnectionStrings[keyConnection].ConnectionString).DefaultSchema(schema))
-                .Mappings(m =>
-                {
-                    m.AutoMappings.Add(
-                        AutoMap.Assemblies(new AutomappingConfiguration(), assembliesToMap)
-                               .UseOverridesFromAssembly(overrideClass)
-                    );
-                })
-                .Mappings(m => m.HbmMappings.AddFromAssembly(overrideClass))
-                .ExposeConfiguration(c => c.SetProperty("command_timeout", "1200"))
-                .BuildSessionFactory();
+                    .Configure()
+                    .Database(MsSqlConfiguration.MsSql2008.ConnectionString(ConfigurationManager.ConnectionStrings[keyConnection].ConnectionString).DefaultSchema(schema))
+                    .Mappings(m =>
+                    {
+                        m.AutoMappings.Add(
+                            AutoMap.Assemblies(new AutomappingConfiguration(), assembliesToMap)
+                                   .UseOverridesFromAssembly(overrideClass)
+                        );
+                    })
+                    .Mappings(m => m.HbmMappings.AddFromAssembly(overrideClass))
+                    .ExposeConfiguration(c => c.SetProperty("command_timeout", "1200"))
+                    .BuildSessionFactory();
         }
 
-        public static void CloseSession(ISession session)
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void ClearAllSessionFactories()
         {
-            if (session != null)
+            lock (Mutex)
             {
-                if (session.IsOpen)
+                string[] keys = SessionFactories.Keys.ToArray();
+
+                foreach (string key in keys)
                 {
-                    session.Close();
+                    SessionFactories[key].Dispose();
+                    SessionFactories[key] = null;
+                    SessionFactories.Remove(key);
                 }
-                session.Dispose();
+
+                SessionFactories.Clear();
             }
         }
     }

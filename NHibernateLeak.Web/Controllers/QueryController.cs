@@ -7,10 +7,20 @@ namespace NHibernateLeak.Web.Controllers
     public class QueryController : Controller
     {
         private readonly IQueryRepository _queryRepo;
+        private readonly ISessionFactoryBuilder _factory;
 
-        public QueryController(IQueryRepository queryRepository)
+        public QueryController(IQueryRepository queryRepository, ISessionFactoryBuilder factory)
         {
             _queryRepo = queryRepository;
+            _factory = factory;
+        }
+
+        [HttpPost]
+        public ActionResult Collect(string tenant)
+        {
+            _factory.ClearAll();
+            GC.Collect();
+            return Json(new { id = 1, text = "hello" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

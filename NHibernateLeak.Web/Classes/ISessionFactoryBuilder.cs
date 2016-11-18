@@ -12,5 +12,10 @@ namespace NHibernateLeak.Web.Classes
         /// </summary>
         /// <returns></returns>
         ISessionFactory CreateSchemaSessionFactory();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void ClearAll();
     }
 }

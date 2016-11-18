@@ -22,5 +22,10 @@ namespace NHibernateLeak.Web.Classes
 
             return SqlNHibernateSessionFactoryProvider.CreateSessionFactory("sch" + tenant?.PadLeft(3, '0'), "MemoryLeak.Connection");
         }
+
+        public void ClearAll()
+        {
+            SqlNHibernateSessionFactoryProvider.ClearAllSessionFactories();
+        }
     }
 }
